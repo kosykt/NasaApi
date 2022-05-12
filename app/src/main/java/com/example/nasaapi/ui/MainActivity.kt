@@ -1,7 +1,8 @@
-package com.example.nasaapi
+package com.example.nasaapi.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.nasaapi.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

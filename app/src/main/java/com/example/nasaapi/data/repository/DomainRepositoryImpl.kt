@@ -12,10 +12,10 @@ class DomainRepositoryImpl(
 ) : DomainRepository {
 
     override suspend fun getPodFromNetwork(date: String): DomainPodModel {
-        return networkRepository.getPod(date).let {
-            cachePod(it)
-            it.toDomainPodModel()
-        }
+        return networkRepository.getPod(date)
+            .also {
+                cachePod(it)
+            }.toDomainPodModel()
     }
 
     private suspend fun cachePod(podDTO: PodDTO) {

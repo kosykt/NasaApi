@@ -25,6 +25,7 @@ object Dependencies {
     const val dagger_comp = "com.google.dagger:dagger-compiler:2.41"
 
     const val coil = "io.coil-kt:coil:2.0.0"
+    const val coil_gif = "io.coil-kt:coil-gif:2.1.0"
 
     const val retrofit = "com.squareup.retrofit2:retrofit:2.9.0"
     const val retrofit_converter_gson = "com.squareup.retrofit2:converter-gson:2.9.0"

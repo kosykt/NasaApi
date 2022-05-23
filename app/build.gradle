@@ -48,6 +48,7 @@ dependencies {
     kapt Dependencies.dagger_comp
 
     implementation Dependencies.coil
+    implementation Dependencies.coil_gif
 
     implementation Dependencies.retrofit
     implementation Dependencies.retrofit_converter_gson

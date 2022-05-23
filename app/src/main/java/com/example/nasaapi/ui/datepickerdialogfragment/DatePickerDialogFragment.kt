@@ -28,11 +28,9 @@ class DatePickerDialogFragment : DialogFragment(), DatePickerDialog.OnDateSetLis
     }
 
     companion object {
-        @JvmStatic
-        val TAG = DatePickerDialogFragment::class.java.simpleName
 
         @JvmStatic
-        val REQUEST_KEY = "$TAG:defaultRequestKey"
+        val REQUEST_KEY = "DatePickerDialogFragment:defaultRequestKey"
 
         @JvmStatic
         val KEY_RESPONSE = "RESPONSE"

@@ -39,6 +39,7 @@ object Dependencies {
     const val navigation_fragment = "androidx.navigation:navigation-fragment-ktx:2.4.2"
     const val navigation_ui = "androidx.navigation:navigation-ui-ktx:2.4.2"
 
+    const val fragment_ktx = "androidx.fragment:fragment-ktx:1.4.1"
     const val lifecycle_viewmodel_ktx = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1"
     const val lifecycle_runtime_ktx = "androidx.lifecycle:lifecycle-runtime-ktx:2.4.1"
     const val core_ktx = "androidx.core:core-ktx:1.7.0"

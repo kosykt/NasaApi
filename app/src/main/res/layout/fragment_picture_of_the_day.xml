@@ -6,14 +6,28 @@
     android:layout_height="match_parent"
     tools:context=".ui.pictureofthedayfragment.PictureOfTheDayFragment">
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/pod_fragment_start_guideline"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="16dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/pod_fragment_end_guideline"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="16dp" />
+
     <TextView
         android:id="@+id/pod_fragment_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/pod_fragment_end_guideline"
+        app:layout_constraintStart_toStartOf="@id/pod_fragment_start_guideline"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Title" />
 
@@ -22,35 +36,65 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:scaleType="fitStart"
-        tools:src="@drawable/ic_launcher_background"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pod_fragment_title" />
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="@id/pod_fragment_end_guideline"
+        app:layout_constraintStart_toStartOf="@id/pod_fragment_start_guideline"
+        app:layout_constraintTop_toBottomOf="@id/pod_fragment_title"
+        tools:src="@drawable/ic_launcher_background" />
 
     <TextView
         android:id="@+id/pod_fragment_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@id/pod_fragment_date_barrier"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/pod_fragment_image_view"
-        tools:text="DATE"
-        android:textSize="20sp"
-        android:textColor="@color/black"/>
+        tools:text="DATE" />
 
-    <Button
+    <ImageView
         android:id="@+id/pod_fragment_previous_day"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/pod_fragment_image_view"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:background="@drawable/ic_baseline_chevron_left_24"
+        app:layout_constraintBottom_toTopOf="@id/pod_fragment_date_barrier"
+        app:layout_constraintEnd_toStartOf="@id/pod_fragment_date"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@id/pod_fragment_start_guideline"
+        app:layout_constraintTop_toBottomOf="@id/pod_fragment_image_view" />
 
-    <Button
+    <ImageView
         android:id="@+id/pod_fragment_second_day"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/pod_fragment_image_view"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:background="@drawable/ic_baseline_chevron_right_24"
+        app:layout_constraintBottom_toTopOf="@id/pod_fragment_date_barrier"
+        app:layout_constraintEnd_toEndOf="@id/pod_fragment_end_guideline"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@id/pod_fragment_date"
+        app:layout_constraintTop_toBottomOf="@id/pod_fragment_image_view" />
 
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/pod_fragment_date_barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="pod_fragment_second_day, pod_fragment_previous_day, pod_fragment_date" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="@id/pod_fragment_end_guideline"
+        app:layout_constraintStart_toStartOf="@id/pod_fragment_start_guideline"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pod_fragment_date_barrier">
+
+        <TextView
+            android:id="@+id/pod_fragment_explanation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="@tools:sample/lorem/random" />
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

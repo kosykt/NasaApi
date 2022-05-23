@@ -6,7 +6,7 @@ data class PodDTO(
     val date: String,
     val explanation: String,
     @SerializedName("hdurl")
-    val hdUrl: String,
+    val hdUrl: String?,
     @SerializedName("media_type")
     val mediaType: String,
     @SerializedName("service_version")

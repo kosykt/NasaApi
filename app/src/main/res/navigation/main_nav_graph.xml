@@ -9,5 +9,17 @@
         android:id="@+id/pictureOfTheDayFragment"
         android:name="com.example.nasaapi.ui.pictureofthedayfragment.PictureOfTheDayFragment"
         android:label="fragment_picture_of_the_day"
-        tools:layout="@layout/fragment_picture_of_the_day" />
+        tools:layout="@layout/fragment_picture_of_the_day" >
+        <action
+            android:id="@+id/action_pictureOfTheDayFragment_to_dialogFragmentPickDate"
+            app:destination="@id/dialogFragmentPickDate2" />
+    </fragment>
+    <dialog
+        android:id="@+id/dialogFragmentPickDate2"
+        android:name="com.example.nasaapi.ui.pictureofthedayfragment.DialogFragmentPickDate"
+        android:label="DialogFragmentPickDate" >
+        <argument
+            android:name="date"
+            app:argType="integer[]" />
+    </dialog>
 </navigation>

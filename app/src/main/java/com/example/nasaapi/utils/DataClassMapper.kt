@@ -7,7 +7,7 @@ import com.example.nasaapi.domain.model.DomainPodModel
 fun PodDTO.toDomainPodModel() = DomainPodModel(
     date = this.date,
     explanation = this.explanation,
-    hdUrl = this.hdUrl,
+    hdUrl = this.hdUrl.orEmpty(),
     mediaType = this.mediaType,
     serviceVersion = this.serviceVersion,
     title = this.title,
@@ -17,7 +17,7 @@ fun PodDTO.toDomainPodModel() = DomainPodModel(
 fun PodDTO.toPodEntity() = PodEntity(
     date = this.date,
     explanation = this.explanation,
-    hdUrl = this.hdUrl,
+    hdUrl = this.hdUrl.orEmpty(),
     mediaType = this.mediaType,
     serviceVersion = this.serviceVersion,
     title = this.title,

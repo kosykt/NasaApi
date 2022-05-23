@@ -7,7 +7,6 @@ import android.widget.DatePicker
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 
 class DatePickerDialogFragment : DialogFragment(), DatePickerDialog.OnDateSetListener {
@@ -24,13 +23,7 @@ class DatePickerDialogFragment : DialogFragment(), DatePickerDialog.OnDateSetLis
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         setFragmentResult(
             REQUEST_KEY,
-            bundleOf(
-                KEY_RESPONSE to arrayOf(
-                    year.toString(),
-                    month.toString(),
-                    dayOfMonth.toString()
-                )
-            )
+            bundleOf(KEY_RESPONSE to intArrayOf(year, month, dayOfMonth))
         )
     }
 

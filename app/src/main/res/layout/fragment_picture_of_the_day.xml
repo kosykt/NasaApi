@@ -29,6 +29,9 @@
             android:id="@+id/pod_fragment_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:minLines="2"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="24sp"
@@ -37,16 +40,28 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Title" />
 
-        <ImageView
-            android:id="@+id/pod_fragment_image_view"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/pod_fragment_card_view_to_image"
             android:layout_width="0dp"
-            android:layout_height="250dp"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="16dp"
             app:layout_constraintEnd_toEndOf="@id/pod_fragment_end_guideline"
             app:layout_constraintStart_toStartOf="@id/pod_fragment_start_guideline"
-            app:layout_constraintTop_toBottomOf="@id/pod_fragment_title"
-            tools:src="@drawable/ic_launcher_background" />
+            app:layout_constraintTop_toBottomOf="@id/pod_fragment_title">
+
+            <ImageView
+                android:id="@+id/pod_fragment_image_view"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="parent"
+                tools:src="@drawable/ic_launcher_background" />
+
+        </androidx.cardview.widget.CardView>
+
 
         <ProgressBar
             android:id="@+id/pod_fragment_progress_bar"
@@ -55,10 +70,10 @@
             android:indeterminateDrawable="@drawable/ar_loading_animation"
             android:indeterminateOnly="true"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@id/pod_fragment_image_view"
-            app:layout_constraintEnd_toEndOf="@id/pod_fragment_image_view"
-            app:layout_constraintStart_toStartOf="@id/pod_fragment_image_view"
-            app:layout_constraintTop_toTopOf="@id/pod_fragment_image_view"
+            app:layout_constraintBottom_toBottomOf="@id/pod_fragment_card_view_to_image"
+            app:layout_constraintEnd_toEndOf="@id/pod_fragment_card_view_to_image"
+            app:layout_constraintStart_toStartOf="@id/pod_fragment_card_view_to_image"
+            app:layout_constraintTop_toTopOf="@id/pod_fragment_card_view_to_image"
             tools:visibility="visible" />
 
         <CheckBox
@@ -68,7 +83,7 @@
             android:button="@drawable/sl_favorite_checkable"
             app:layout_constraintBottom_toTopOf="@id/pod_fragment_date_barrier"
             app:layout_constraintStart_toStartOf="@id/pod_fragment_start_guideline"
-            app:layout_constraintTop_toBottomOf="@id/pod_fragment_image_view" />
+            app:layout_constraintTop_toBottomOf="@id/pod_fragment_card_view_to_image" />
 
         <ImageButton
             android:id="@+id/pod_fragment_share_button"
@@ -78,7 +93,7 @@
             android:src="@drawable/ic_baseline_share_24"
             app:layout_constraintBottom_toTopOf="@id/pod_fragment_date_barrier"
             app:layout_constraintStart_toEndOf="@id/pod_fragment_favorite_check_box"
-            app:layout_constraintTop_toBottomOf="@id/pod_fragment_image_view" />
+            app:layout_constraintTop_toBottomOf="@id/pod_fragment_card_view_to_image" />
 
         <TextView
             android:id="@+id/pod_fragment_date"
@@ -88,7 +103,7 @@
             android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@id/pod_fragment_date_barrier"
             app:layout_constraintEnd_toStartOf="@id/pod_fragment_second_day"
-            app:layout_constraintTop_toBottomOf="@id/pod_fragment_image_view"
+            app:layout_constraintTop_toBottomOf="@id/pod_fragment_card_view_to_image"
             tools:text="DATE" />
 
         <ImageButton
@@ -99,7 +114,7 @@
             android:src="@drawable/ic_baseline_chevron_left_24"
             app:layout_constraintBottom_toTopOf="@id/pod_fragment_date_barrier"
             app:layout_constraintEnd_toStartOf="@id/pod_fragment_date"
-            app:layout_constraintTop_toBottomOf="@id/pod_fragment_image_view" />
+            app:layout_constraintTop_toBottomOf="@id/pod_fragment_card_view_to_image" />
 
         <ImageButton
             android:id="@+id/pod_fragment_second_day"
@@ -109,7 +124,7 @@
             android:src="@drawable/ic_baseline_chevron_right_24"
             app:layout_constraintBottom_toTopOf="@id/pod_fragment_date_barrier"
             app:layout_constraintEnd_toEndOf="@id/pod_fragment_end_guideline"
-            app:layout_constraintTop_toBottomOf="@id/pod_fragment_image_view" />
+            app:layout_constraintTop_toBottomOf="@id/pod_fragment_card_view_to_image" />
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/pod_fragment_date_barrier"
@@ -118,13 +133,22 @@
             app:barrierDirection="bottom"
             app:constraint_referenced_ids="pod_fragment_favorite_check_box, pod_fragment_second_day, pod_fragment_previous_day, pod_fragment_date" />
 
+        <View
+            android:id="@+id/pod_fragment_date_line"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            app:layout_constraintTop_toTopOf="@id/pod_fragment_date_barrier"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="#79000000"/>
+
         <TextView
             android:id="@+id/pod_fragment_explanation"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="@id/pod_fragment_end_guideline"
             app:layout_constraintStart_toStartOf="@id/pod_fragment_start_guideline"
-            app:layout_constraintTop_toTopOf="@id/pod_fragment_date_barrier"
+            app:layout_constraintTop_toBottomOf="@id/pod_fragment_date_line"
             tools:text="@tools:sample/lorem/random" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,6 +11,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.nasaapi.R
 import com.example.nasaapi.databinding.FragmentPictureOfTheDayBinding
 import com.example.nasaapi.ui.datepickerdialogfragment.DatePickerDialogFragment
 import com.example.nasaapi.utils.NetworkObserver
@@ -51,7 +52,7 @@ class PictureOfTheDayFragment : Fragment() {
     }
 
     private fun initDialogResultListener() {
-        setFragmentResultListener(DatePickerDialogFragment.REQUEST_KEY){ _, result: Bundle ->
+        setFragmentResultListener(DatePickerDialogFragment.REQUEST_KEY) { _, result: Bundle ->
             val array: IntArray = result.getIntArray(DatePickerDialogFragment.KEY_RESPONSE)!!
             actualDate = LocalDate.of(array[0], array[1], array[2])
             getPod(actualDate.toString())
@@ -94,14 +95,33 @@ class PictureOfTheDayFragment : Fragment() {
                 .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
                 .distinctUntilChanged()
                 .collectLatest {
-                    with(binding) {
-                        podFragmentExplanation.text = it.explanation
-                        podFragmentTitle.text = it.title
-                        podFragmentDate.text = it.date
-                        appImageLoader.loadInto(it.url, podFragmentImageView)
-                    }
+                    renderData(it)
                 }
         }
+    }
+
+    private fun renderData(state: PictureOfTheDayFragmentState) {
+        when (state) {
+            is PictureOfTheDayFragmentState.Success -> {
+                binding.podFragmentExplanation.text = state.response.explanation
+                binding.podFragmentTitle.text = state.response.title
+                binding.podFragmentDate.text = state.response.date
+                binding.podFragmentImageView.visibility = View.VISIBLE
+                binding.podFragmentProgressBar.visibility = View.GONE
+                appImageLoader.loadInto(state.response.url, binding.podFragmentImageView)
+            }
+            is PictureOfTheDayFragmentState.Loading -> {
+                binding.podFragmentTitle.text = requireContext().getText(R.string.loading_state)
+                binding.podFragmentImageView.visibility = View.INVISIBLE
+                binding.podFragmentProgressBar.visibility = View.VISIBLE
+            }
+            is PictureOfTheDayFragmentState.Error -> {
+                binding.podFragmentProgressBar.visibility = View.GONE
+                binding.podFragmentTitle.text = requireContext().getText(R.string.error_state)
+                binding.podFragmentExplanation.text = state.error
+            }
+        }
+
     }
 
     override fun onDestroy() {

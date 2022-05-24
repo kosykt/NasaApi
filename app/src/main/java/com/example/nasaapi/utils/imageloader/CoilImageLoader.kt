@@ -16,12 +16,6 @@ class CoilImageLoader: AppImageLoader {
                 onError = {
                     container.setImageResource(R.drawable.ic_error_place_holder)
                 },
-                onStart = {
-                    container.setImageResource(R.drawable.ic_place_holder)
-                }
-            )
-            transformations(
-                RoundedCornersTransformation(25f)
             )
         }
     }

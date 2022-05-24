@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">NasaApi</string>
+    <string name="loading_state">LOADING</string>
+    <string name="error_state">ERROR</string>
 </resources>

@@ -1,100 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.pictureofthedayfragment.PictureOfTheDayFragment">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/pod_fragment_start_guideline"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="16dp" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/pod_fragment_end_guideline"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="16dp" />
 
-    <TextView
-        android:id="@+id/pod_fragment_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@id/pod_fragment_end_guideline"
-        app:layout_constraintStart_toStartOf="@id/pod_fragment_start_guideline"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Title" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/pod_fragment_start_guideline"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="16dp" />
 
-    <ImageView
-        android:id="@+id/pod_fragment_image_view"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        app:layout_constraintEnd_toEndOf="@id/pod_fragment_end_guideline"
-        app:layout_constraintStart_toStartOf="@id/pod_fragment_start_guideline"
-        app:layout_constraintTop_toBottomOf="@id/pod_fragment_title"
-        tools:src="@drawable/ic_launcher_background" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/pod_fragment_end_guideline"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="16dp" />
 
-    <TextView
-        android:id="@+id/pod_fragment_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@id/pod_fragment_date_barrier"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pod_fragment_image_view"
-        tools:text="DATE" />
+        <TextView
+            android:id="@+id/pod_fragment_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="@id/pod_fragment_end_guideline"
+            app:layout_constraintStart_toStartOf="@id/pod_fragment_start_guideline"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Title" />
 
-    <ImageView
-        android:id="@+id/pod_fragment_previous_day"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/ic_baseline_chevron_left_24"
-        app:layout_constraintBottom_toTopOf="@id/pod_fragment_date_barrier"
-        app:layout_constraintEnd_toStartOf="@id/pod_fragment_date"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@id/pod_fragment_start_guideline"
-        app:layout_constraintTop_toBottomOf="@id/pod_fragment_image_view" />
+        <ImageView
+            android:id="@+id/pod_fragment_image_view"
+            android:layout_width="0dp"
+            android:layout_height="250dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            app:layout_constraintEnd_toEndOf="@id/pod_fragment_end_guideline"
+            app:layout_constraintStart_toStartOf="@id/pod_fragment_start_guideline"
+            app:layout_constraintTop_toBottomOf="@id/pod_fragment_title"
+            tools:src="@drawable/ic_launcher_background" />
 
-    <ImageView
-        android:id="@+id/pod_fragment_second_day"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/ic_baseline_chevron_right_24"
-        app:layout_constraintBottom_toTopOf="@id/pod_fragment_date_barrier"
-        app:layout_constraintEnd_toEndOf="@id/pod_fragment_end_guideline"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@id/pod_fragment_date"
-        app:layout_constraintTop_toBottomOf="@id/pod_fragment_image_view" />
+        <ProgressBar
+            android:id="@+id/pod_fragment_progress_bar"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:indeterminateDrawable="@drawable/ar_loading_animation"
+            android:indeterminateOnly="true"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/pod_fragment_image_view"
+            app:layout_constraintEnd_toEndOf="@id/pod_fragment_image_view"
+            app:layout_constraintStart_toStartOf="@id/pod_fragment_image_view"
+            app:layout_constraintTop_toTopOf="@id/pod_fragment_image_view"
+            tools:visibility="visible" />
 
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/pod_fragment_date_barrier"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="bottom"
-        app:constraint_referenced_ids="pod_fragment_second_day, pod_fragment_previous_day, pod_fragment_date" />
+        <CheckBox
+            android:id="@+id/pod_fragment_favorite_check_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/sl_favorite_checkable"
+            app:layout_constraintBottom_toTopOf="@id/pod_fragment_date_barrier"
+            app:layout_constraintStart_toStartOf="@id/pod_fragment_start_guideline"
+            app:layout_constraintTop_toBottomOf="@id/pod_fragment_image_view" />
 
-    <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintEnd_toEndOf="@id/pod_fragment_end_guideline"
-        app:layout_constraintStart_toStartOf="@id/pod_fragment_start_guideline"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pod_fragment_date_barrier">
+        <ImageButton
+            android:id="@+id/pod_fragment_share_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/ic_baseline_share_24"
+            app:layout_constraintBottom_toTopOf="@id/pod_fragment_date_barrier"
+            app:layout_constraintStart_toEndOf="@id/pod_fragment_favorite_check_box"
+            app:layout_constraintTop_toBottomOf="@id/pod_fragment_image_view" />
+
+        <TextView
+            android:id="@+id/pod_fragment_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@id/pod_fragment_date_barrier"
+            app:layout_constraintEnd_toStartOf="@id/pod_fragment_second_day"
+            app:layout_constraintTop_toBottomOf="@id/pod_fragment_image_view"
+            tools:text="DATE" />
+
+        <ImageButton
+            android:id="@+id/pod_fragment_previous_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/ic_baseline_chevron_left_24"
+            app:layout_constraintBottom_toTopOf="@id/pod_fragment_date_barrier"
+            app:layout_constraintEnd_toStartOf="@id/pod_fragment_date"
+            app:layout_constraintTop_toBottomOf="@id/pod_fragment_image_view" />
+
+        <ImageButton
+            android:id="@+id/pod_fragment_second_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/ic_baseline_chevron_right_24"
+            app:layout_constraintBottom_toTopOf="@id/pod_fragment_date_barrier"
+            app:layout_constraintEnd_toEndOf="@id/pod_fragment_end_guideline"
+            app:layout_constraintTop_toBottomOf="@id/pod_fragment_image_view" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/pod_fragment_date_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="pod_fragment_favorite_check_box, pod_fragment_second_day, pod_fragment_previous_day, pod_fragment_date" />
 
         <TextView
             android:id="@+id/pod_fragment_explanation"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/pod_fragment_end_guideline"
+            app:layout_constraintStart_toStartOf="@id/pod_fragment_start_guideline"
+            app:layout_constraintTop_toTopOf="@id/pod_fragment_date_barrier"
             tools:text="@tools:sample/lorem/random" />
-    </ScrollView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

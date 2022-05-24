@@ -14,10 +14,10 @@ class CoilImageLoader: AppImageLoader {
                     container.setImageDrawable(result)
                 },
                 onError = {
-                    container.setImageResource(R.drawable.ic_launcher_background)
+                    container.setImageResource(R.drawable.ic_error_place_holder)
                 },
                 onStart = {
-                    container.setImageResource(R.drawable.ic_launcher_foreground)
+                    container.setImageResource(R.drawable.ic_place_holder)
                 }
             )
             transformations(

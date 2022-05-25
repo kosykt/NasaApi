@@ -120,7 +120,7 @@ class PictureOfTheDayFragment : Fragment() {
                 binding.podFragmentExplanation.text = state.response.explanation
                 binding.podFragmentTitle.text = state.response.title
                 binding.podFragmentDate.text = state.response.date
-                appImageLoader.loadInto(state.response.url, binding.podFragmentImageView)
+                checkMediaType(state.response.mediaType, state.response.url)
             }
             is PictureOfTheDayFragmentState.Loading -> {
                 binding.podFragmentTitle.text = requireContext().getText(R.string.loading_state)
@@ -133,8 +133,24 @@ class PictureOfTheDayFragment : Fragment() {
 
     }
 
+    private fun checkMediaType(mediaType: String, url: String) {
+        when (mediaType) {
+            IMAGE_TYPE -> {
+                appImageLoader.loadInto(url, binding.podFragmentImageView)
+            }
+            VIDEO_TYPE -> {
+                binding.podFragmentImageView.setImageResource(R.drawable.ic_baseline_ondemand_video_24)
+            }
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    companion object {
+        private const val IMAGE_TYPE = "image"
+        private const val VIDEO_TYPE = "video"
     }
 }

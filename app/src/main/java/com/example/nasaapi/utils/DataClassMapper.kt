@@ -1,6 +1,7 @@
 package com.example.nasaapi.utils
 
 import com.example.nasaapi.data.database.model.CachePodEntity
+import com.example.nasaapi.data.database.model.FavoritePodEntity
 import com.example.nasaapi.data.network.model.PodDTO
 import com.example.nasaapi.domain.model.DomainPodModel
 
@@ -33,3 +34,5 @@ fun CachePodEntity.toDomainPodModel() = DomainPodModel(
     title = this.title,
     url = this.url,
 )
+
+fun List<FavoritePodEntity>.toListString() = this.map { it.date }

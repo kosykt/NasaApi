@@ -1,9 +1,9 @@
 package com.example.nasaapi.data.repository
 
-import com.example.nasaapi.data.database.model.PodEntity
+import com.example.nasaapi.data.database.model.CachePodEntity
 
 interface DatabaseRepository {
 
-    suspend fun insert(podEntity: PodEntity)
-    suspend fun getPodByData(date: String): PodEntity
+    suspend fun insertCachePodEntity(cachePodEntity: CachePodEntity)
+    suspend fun getCachePodEntityByData(date: String): CachePodEntity
 }

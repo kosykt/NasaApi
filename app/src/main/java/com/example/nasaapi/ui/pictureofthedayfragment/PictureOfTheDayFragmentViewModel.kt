@@ -40,7 +40,7 @@ class PictureOfTheDayFragmentViewModel : ViewModel() {
             }
         ) {
             _pod.value = PictureOfTheDayFragmentState.Success(
-                getPodUseCase.execute(
+                getPodUseCase(
                     isNetworkAvailable,
                     date
                 )

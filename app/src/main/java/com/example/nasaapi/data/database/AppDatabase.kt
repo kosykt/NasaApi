@@ -4,13 +4,13 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.nasaapi.App
-import com.example.nasaapi.data.database.dao.PodDao
-import com.example.nasaapi.data.database.model.PodEntity
+import com.example.nasaapi.data.database.dao.CachePodDao
+import com.example.nasaapi.data.database.model.CachePodEntity
 
-@Database(entities = [PodEntity::class], version = 1, exportSchema = false)
+@Database(entities = [CachePodEntity::class], version = 1, exportSchema = false)
 abstract class AppDatabase: RoomDatabase() {
 
-    abstract fun podDao(): PodDao
+    abstract fun cachePodDao(): CachePodDao
 
     companion object{
         private const val DB_NAME = "database.db"

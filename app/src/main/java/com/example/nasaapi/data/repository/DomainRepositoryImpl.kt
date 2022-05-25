@@ -19,10 +19,10 @@ class DomainRepositoryImpl(
     }
 
     private suspend fun cachePod(podDTO: PodDTO) {
-        databaseRepository.insert(podDTO.toPodEntity())
+        databaseRepository.insertCachePodEntity(podDTO.toPodEntity())
     }
 
     override suspend fun getPodFromDatabase(date: String): DomainPodModel {
-        return databaseRepository.getPodByData(date).toDomainPodModel()
+        return databaseRepository.getCachePodEntityByData(date).toDomainPodModel()
     }
 }

@@ -8,7 +8,6 @@ import com.example.nasaapi.data.network.ApiHolder
 import com.example.nasaapi.data.network.NetworkRepositoryImpl
 import com.example.nasaapi.data.repository.DomainRepositoryImpl
 import com.example.nasaapi.domain.GetPodUseCase
-import com.example.nasaapi.domain.model.DomainPodModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancelChildren
@@ -27,7 +26,7 @@ class PictureOfTheDayFragmentViewModel : ViewModel() {
     private val getPodUseCase = GetPodUseCase(domainRepository)
 
     private val _pod: MutableStateFlow<PictureOfTheDayFragmentState> =
-        MutableStateFlow(PictureOfTheDayFragmentState.Success(DomainPodModel()))
+        MutableStateFlow(PictureOfTheDayFragmentState.Success())
     val pod: StateFlow<PictureOfTheDayFragmentState> = _pod.asStateFlow()
 
     fun getPod(isNetworkAvailable: Boolean, date: String) {

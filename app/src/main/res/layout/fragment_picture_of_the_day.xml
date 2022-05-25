@@ -42,8 +42,8 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/pod_fragment_card_view_to_image"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="250dp"
             app:cardCornerRadius="16dp"
             app:cardElevation="16dp"
             app:layout_constraintEnd_toEndOf="@id/pod_fragment_end_guideline"
@@ -51,30 +51,14 @@
             app:layout_constraintTop_toBottomOf="@id/pod_fragment_title">
 
             <ImageView
+                android:layout_gravity="center"
                 android:id="@+id/pod_fragment_image_view"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="parent"
                 tools:src="@drawable/ic_launcher_background" />
-
         </androidx.cardview.widget.CardView>
-
-
-        <ProgressBar
-            android:id="@+id/pod_fragment_progress_bar"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:indeterminateDrawable="@drawable/ar_loading_animation"
-            android:indeterminateOnly="true"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@id/pod_fragment_card_view_to_image"
-            app:layout_constraintEnd_toEndOf="@id/pod_fragment_card_view_to_image"
-            app:layout_constraintStart_toStartOf="@id/pod_fragment_card_view_to_image"
-            app:layout_constraintTop_toTopOf="@id/pod_fragment_card_view_to_image"
-            tools:visibility="visible" />
 
         <CheckBox
             android:id="@+id/pod_fragment_favorite_check_box"

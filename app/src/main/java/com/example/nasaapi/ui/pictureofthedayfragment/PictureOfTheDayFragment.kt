@@ -39,7 +39,7 @@ class PictureOfTheDayFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentPictureOfTheDayBinding.inflate(inflater, container, false)
         return binding.root
@@ -95,9 +95,16 @@ class PictureOfTheDayFragment : Fragment() {
                 .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
                 .distinctUntilChanged()
                 .collectLatest {
+                    cleanData()
                     renderData(it)
                 }
         }
+    }
+
+    private fun cleanData() {
+        binding.podFragmentExplanation.text = ""
+        binding.podFragmentTitle.text = ""
+        binding.podFragmentDate.text = actualDate.toString()
     }
 
     private fun renderData(state: PictureOfTheDayFragmentState) {
@@ -106,17 +113,12 @@ class PictureOfTheDayFragment : Fragment() {
                 binding.podFragmentExplanation.text = state.response.explanation
                 binding.podFragmentTitle.text = state.response.title
                 binding.podFragmentDate.text = state.response.date
-                binding.podFragmentImageView.visibility = View.VISIBLE
-                binding.podFragmentProgressBar.visibility = View.GONE
                 appImageLoader.loadInto(state.response.url, binding.podFragmentImageView)
             }
             is PictureOfTheDayFragmentState.Loading -> {
                 binding.podFragmentTitle.text = requireContext().getText(R.string.loading_state)
-                binding.podFragmentImageView.visibility = View.INVISIBLE
-                binding.podFragmentProgressBar.visibility = View.VISIBLE
             }
             is PictureOfTheDayFragmentState.Error -> {
-                binding.podFragmentProgressBar.visibility = View.GONE
                 binding.podFragmentTitle.text = requireContext().getText(R.string.error_state)
                 binding.podFragmentExplanation.text = state.error
             }

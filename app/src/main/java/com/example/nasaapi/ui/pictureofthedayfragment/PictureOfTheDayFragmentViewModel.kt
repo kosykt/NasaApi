@@ -11,6 +11,7 @@ import com.example.nasaapi.domain.GetPodUseCase
 import com.example.nasaapi.domain.model.DomainPodModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -30,6 +31,7 @@ class PictureOfTheDayFragmentViewModel : ViewModel() {
     val pod: StateFlow<PictureOfTheDayFragmentState> = _pod.asStateFlow()
 
     fun getPod(isNetworkAvailable: Boolean, date: String) {
+        viewModelScope.coroutineContext.cancelChildren()
         _pod.value = PictureOfTheDayFragmentState.Loading
         viewModelScope.launch(
             Dispatchers.IO

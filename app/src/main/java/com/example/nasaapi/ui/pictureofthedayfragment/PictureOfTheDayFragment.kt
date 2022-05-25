@@ -18,15 +18,12 @@ import com.example.nasaapi.utils.NetworkObserver
 import com.example.nasaapi.utils.imageloader.CoilImageLoader
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
-import java.time.LocalDate
 
 class PictureOfTheDayFragment : Fragment() {
 
     private val viewModel by viewModels<PictureOfTheDayFragmentViewModel>()
     private val networkObserver by lazy { NetworkObserver(requireContext()) }
     private val appImageLoader by lazy { CoilImageLoader() }
-
-    private var actualDate = LocalDate.now().minusDays(1)
 
     private var _binding: FragmentPictureOfTheDayBinding? = null
     private val binding: FragmentPictureOfTheDayBinding
@@ -53,13 +50,14 @@ class PictureOfTheDayFragment : Fragment() {
 
     private fun initDialogResultListener() {
         setFragmentResultListener(DatePickerDialogFragment.REQUEST_KEY) { _, result: Bundle ->
-            val array: IntArray = result.getIntArray(DatePickerDialogFragment.KEY_RESPONSE)!!
-            actualDate = LocalDate.of(array[0], array[1], array[2])
-            getPod(actualDate.toString())
+            val array: IntArray = result.getIntArray(DatePickerDialogFragment.KEY_RESPONSE)
+                ?: throw RuntimeException("DialogFragment result is null")
+            viewModel.setDate(array[0], array[1], array[2])
+            getPod(viewModel.actualDate.toString())
         }
     }
 
-    private fun getPod(date: String = actualDate.toString()) {
+    private fun getPod(date: String = viewModel.actualDate.toString()) {
         lifecycleScope.launchWhenCreated {
             networkObserver.networkIsAvailable()
                 .flowWithLifecycle(lifecycle, Lifecycle.State.CREATED)
@@ -72,19 +70,26 @@ class PictureOfTheDayFragment : Fragment() {
 
     private fun initListeners() {
         binding.podFragmentPreviousDay.setOnClickListener {
-            actualDate = actualDate.minusDays(1)
-            getPod(actualDate.toString())
+            viewModel.minusDay()
+            getPod(viewModel.actualDate.toString())
         }
         binding.podFragmentSecondDay.setOnClickListener {
-            actualDate = actualDate.plusDays(1)
-            getPod(actualDate.toString())
+            viewModel.plusDay()
+            getPod(viewModel.actualDate.toString())
         }
         binding.podFragmentDate.setOnClickListener {
             val action = PictureOfTheDayFragmentDirections
                 .actionPictureOfTheDayFragmentToDatePickerDialogFragment(
-                    intArrayOf(actualDate.year, actualDate.month.value, actualDate.dayOfMonth)
+                    intArrayOf(
+                        viewModel.actualDate.year,
+                        viewModel.actualDate.month.value,
+                        viewModel.actualDate.dayOfMonth
+                    )
                 )
             findNavController().navigate(action)
+        }
+        binding.podFragmentFavoriteCheckBox.setOnClickListener {
+            binding.podFragmentFavoriteCheckBox.isChecked = viewModel.favoriteClickHandler()
         }
     }
 
@@ -104,12 +109,14 @@ class PictureOfTheDayFragment : Fragment() {
     private fun cleanData() {
         binding.podFragmentExplanation.text = ""
         binding.podFragmentTitle.text = ""
-        binding.podFragmentDate.text = actualDate.toString()
+        binding.podFragmentFavoriteCheckBox.isChecked = false
+        binding.podFragmentDate.text = viewModel.actualDate.toString()
     }
 
     private fun renderData(state: PictureOfTheDayFragmentState) {
         when (state) {
             is PictureOfTheDayFragmentState.Success -> {
+                binding.podFragmentFavoriteCheckBox.isChecked = viewModel.checkIfFavorite()
                 binding.podFragmentExplanation.text = state.response.explanation
                 binding.podFragmentTitle.text = state.response.title
                 binding.podFragmentDate.text = state.response.date

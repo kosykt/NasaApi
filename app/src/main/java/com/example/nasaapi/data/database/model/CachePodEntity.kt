@@ -5,8 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class CachePodEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    @PrimaryKey
     val date: String,
     val explanation: String,
     val hdUrl: String,

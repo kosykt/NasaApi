@@ -35,4 +35,6 @@ fun CachePodEntity.toDomainPodModel() = DomainPodModel(
     url = this.url,
 )
 
-fun List<FavoritePodEntity>.toListString() = this.map { it.date }
+fun List<FavoritePodEntity>.toListString() = this.map {
+    it.date
+}

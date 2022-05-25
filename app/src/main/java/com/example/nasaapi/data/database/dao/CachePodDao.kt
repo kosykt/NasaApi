@@ -10,8 +10,8 @@ import com.example.nasaapi.data.database.model.CachePodEntity
 interface CachePodDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(model: CachePodEntity)
+    suspend fun insert(model: CachePodEntity)
 
     @Query("SELECT * FROM CachePodEntity WHERE date =:date")
-    fun getByDate(date: String): CachePodEntity
+    suspend fun getByDate(date: String): CachePodEntity
 }

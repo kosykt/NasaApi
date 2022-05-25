@@ -15,5 +15,4 @@ interface FavoritePodDao {
 
     @Query("SELECT * FROM FavoritePodEntity")
     fun getAll(): Flow<List<FavoritePodEntity>>
-
 }

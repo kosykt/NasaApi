@@ -2,9 +2,9 @@ package com.example.nasaapi.di.modules.scopes
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
+import com.example.domain.*
 import com.example.nasaapi.di.annotations.PodScope
 import com.example.nasaapi.di.annotations.ViewModelKey
-import com.example.nasaapi.domain.*
 import com.example.nasaapi.ui.pictureofthedayfragment.PictureOfTheDayFragmentViewModel
 import com.example.nasaapi.ui.pictureofthedayfragment.PodSubcomponentProvider
 import dagger.Binds

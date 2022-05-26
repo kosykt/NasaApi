@@ -1,6 +1,6 @@
 package com.example.nasaapi.ui.pictureofthedayfragment
 
-import com.example.nasaapi.domain.model.DomainPodModel
+import com.example.domain.model.DomainPodModel
 
 sealed class PictureOfTheDayFragmentState {
 

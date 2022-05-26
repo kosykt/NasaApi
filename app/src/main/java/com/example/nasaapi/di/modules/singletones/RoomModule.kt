@@ -2,7 +2,7 @@ package com.example.nasaapi.di.modules.singletones
 
 import android.app.Application
 import androidx.room.Room
-import com.example.nasaapi.data.database.AppDatabase
+import com.example.data.database.AppDatabase
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

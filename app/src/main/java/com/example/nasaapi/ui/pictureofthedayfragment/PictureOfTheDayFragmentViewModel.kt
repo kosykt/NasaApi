@@ -2,10 +2,10 @@ package com.example.nasaapi.ui.pictureofthedayfragment
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.nasaapi.domain.DeleteFavoritePodUseCase
-import com.example.nasaapi.domain.GetAllFavoritePodsUseCase
-import com.example.nasaapi.domain.GetPodUseCase
-import com.example.nasaapi.domain.SaveFavoritePodUseCase
+import com.example.domain.DeleteFavoritePodUseCase
+import com.example.domain.GetAllFavoritePodsUseCase
+import com.example.domain.GetPodUseCase
+import com.example.domain.SaveFavoritePodUseCase
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*

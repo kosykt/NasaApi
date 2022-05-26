@@ -1,6 +1,6 @@
 package com.example.nasaapi.di.modules.singletones
 
-import com.example.nasaapi.data.network.RetrofitService
+import com.example.data.network.RetrofitService
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient

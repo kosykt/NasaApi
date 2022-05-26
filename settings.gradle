@@ -14,3 +14,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "NasaApi"
 include ':app'
+include ':domain'
+include ':data'

@@ -1,14 +1,14 @@
 package com.example.nasaapi.di.modules.singletones
 
 import android.app.Application
-import com.example.nasaapi.data.database.AppDatabase
-import com.example.nasaapi.data.database.DatabaseRepositoryImpl
-import com.example.nasaapi.data.network.NetworkRepositoryImpl
-import com.example.nasaapi.data.network.RetrofitService
-import com.example.nasaapi.data.repository.DatabaseRepository
-import com.example.nasaapi.data.repository.DomainRepositoryImpl
-import com.example.nasaapi.data.repository.NetworkRepository
-import com.example.nasaapi.domain.DomainRepository
+import com.example.data.database.AppDatabase
+import com.example.data.database.DatabaseRepositoryImpl
+import com.example.data.network.NetworkRepositoryImpl
+import com.example.data.network.RetrofitService
+import com.example.data.repository.DatabaseRepository
+import com.example.data.repository.DomainRepositoryImpl
+import com.example.data.repository.NetworkRepository
+import com.example.domain.DomainRepository
 import com.example.nasaapi.utils.NetworkObserver
 import com.example.nasaapi.utils.imageloader.AppImageLoader
 import com.example.nasaapi.utils.imageloader.CoilImageLoader

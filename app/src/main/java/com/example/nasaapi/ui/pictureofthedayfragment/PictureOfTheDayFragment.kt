@@ -1,13 +1,14 @@
 package com.example.nasaapi.ui.pictureofthedayfragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -15,19 +16,36 @@ import com.example.nasaapi.R
 import com.example.nasaapi.databinding.FragmentPictureOfTheDayBinding
 import com.example.nasaapi.ui.datepickerdialogfragment.DatePickerDialogFragment
 import com.example.nasaapi.utils.NetworkObserver
-import com.example.nasaapi.utils.imageloader.CoilImageLoader
+import com.example.nasaapi.utils.ViewModelFactory
+import com.example.nasaapi.utils.imageloader.AppImageLoader
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
+import javax.inject.Inject
 
 class PictureOfTheDayFragment : Fragment() {
 
-    private val viewModel by viewModels<PictureOfTheDayFragmentViewModel>()
-    private val networkObserver by lazy { NetworkObserver(requireContext()) }
-    private val appImageLoader by lazy { CoilImageLoader() }
+    @Inject
+    lateinit var appImageLoader: AppImageLoader
+
+    @Inject
+    lateinit var networkObserver: NetworkObserver
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    private val viewModel: PictureOfTheDayFragmentViewModel by lazy {
+        ViewModelProvider(this, viewModelFactory)[PictureOfTheDayFragmentViewModel::class.java]
+    }
 
     private var _binding: FragmentPictureOfTheDayBinding? = null
     private val binding: FragmentPictureOfTheDayBinding
         get() = _binding ?: throw RuntimeException("FragmentPictureOfTheDayBinding? = null")
+
+    override fun onAttach(context: Context) {
+        (requireActivity().application as PodSubcomponentProvider)
+            .initPodSubcomponent()
+            .inject(this)
+        super.onAttach(context)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

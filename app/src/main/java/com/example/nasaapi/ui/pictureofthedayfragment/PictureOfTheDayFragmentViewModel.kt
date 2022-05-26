@@ -2,11 +2,6 @@ package com.example.nasaapi.ui.pictureofthedayfragment
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.nasaapi.data.database.AppDatabase
-import com.example.nasaapi.data.database.DatabaseRepositoryImpl
-import com.example.nasaapi.data.network.ApiHolder
-import com.example.nasaapi.data.network.NetworkRepositoryImpl
-import com.example.nasaapi.data.repository.DomainRepositoryImpl
 import com.example.nasaapi.domain.DeleteFavoritePodUseCase
 import com.example.nasaapi.domain.GetAllFavoritePodsUseCase
 import com.example.nasaapi.domain.GetPodUseCase
@@ -16,18 +11,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import javax.inject.Inject
 
-class PictureOfTheDayFragmentViewModel : ViewModel() {
-
-    private val db = AppDatabase.instance
-    private val databaseRepository = DatabaseRepositoryImpl(db)
-    private val retrofitService = ApiHolder.retrofitService
-    private val networkRepository = NetworkRepositoryImpl(retrofitService)
-    private val domainRepository = DomainRepositoryImpl(networkRepository, databaseRepository)
-    private val getPodUseCase = GetPodUseCase(domainRepository)
-    private val saveFavoritePodUseCase = SaveFavoritePodUseCase(domainRepository)
-    private val deleteFavoritePodUseCase = DeleteFavoritePodUseCase(domainRepository)
-    private val getAllFavoritePodsUseCase = GetAllFavoritePodsUseCase(domainRepository)
+class PictureOfTheDayFragmentViewModel @Inject constructor(
+    private val podSubcomponentProvider: PodSubcomponentProvider,
+    private val getPodUseCase: GetPodUseCase,
+    private val saveFavoritePodUseCase: SaveFavoritePodUseCase,
+    private val deleteFavoritePodUseCase: DeleteFavoritePodUseCase,
+    getAllFavoritePodsUseCase: GetAllFavoritePodsUseCase,
+) : ViewModel() {
 
     private var _actualDate = LocalDate.now().minusDays(1)
     val actualDate: LocalDate
@@ -97,5 +89,10 @@ class PictureOfTheDayFragmentViewModel : ViewModel() {
 
     private fun errorCatch(throwable: Throwable) {
         _pod.value = PictureOfTheDayFragmentState.Error(throwable.message.toString())
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        podSubcomponentProvider.destroyPodSubcomponent()
     }
 }

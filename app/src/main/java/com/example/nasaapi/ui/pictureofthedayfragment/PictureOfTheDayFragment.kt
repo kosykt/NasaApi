@@ -1,7 +1,11 @@
 package com.example.nasaapi.ui.pictureofthedayfragment
 
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +22,7 @@ import com.example.nasaapi.ui.datepickerdialogfragment.DatePickerDialogFragment
 import com.example.nasaapi.utils.NetworkObserver
 import com.example.nasaapi.utils.ViewModelFactory
 import com.example.nasaapi.utils.imageloader.AppImageLoader
+import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import javax.inject.Inject
@@ -36,6 +41,7 @@ class PictureOfTheDayFragment : Fragment() {
         ViewModelProvider(this, viewModelFactory)[PictureOfTheDayFragmentViewModel::class.java]
     }
 
+    private var canActivateIntent = false
     private var _binding: FragmentPictureOfTheDayBinding? = null
     private val binding: FragmentPictureOfTheDayBinding
         get() = _binding ?: throw RuntimeException("FragmentPictureOfTheDayBinding? = null")
@@ -138,6 +144,7 @@ class PictureOfTheDayFragment : Fragment() {
                 binding.podFragmentExplanation.text = state.response.explanation
                 binding.podFragmentTitle.text = state.response.title
                 binding.podFragmentDate.text = state.response.date
+                initShareButton(state.response.url)
                 checkMediaType(state.response.mediaType, state.response.url)
             }
             is PictureOfTheDayFragmentState.Loading -> {
@@ -151,15 +158,51 @@ class PictureOfTheDayFragment : Fragment() {
 
     }
 
+    private fun initShareButton(url: String) {
+        binding.podFragmentShareButton.setOnClickListener {
+            val sendIntent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, url)
+                type = "text/plain"
+            }
+            try {
+                startActivity(sendIntent)
+            } catch (e: ActivityNotFoundException) {
+                Log.e(this::class.java.simpleName, e.message.toString())
+            }
+        }
+    }
+
     private fun checkMediaType(mediaType: String, url: String) {
         when (mediaType) {
             IMAGE_TYPE -> {
                 appImageLoader.loadInto(url, binding.podFragmentImageView)
+                canActivateIntent = false
             }
             VIDEO_TYPE -> {
                 binding.podFragmentImageView.setImageResource(R.drawable.ic_baseline_ondemand_video_24)
+                canActivateIntent = true
+                init(url)
             }
         }
+    }
+
+    private fun init(url: String) {
+        binding.podFragmentImageView.setOnClickListener {
+            if (canActivateIntent) {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                try {
+                    startActivity(intent)
+                } catch (e: ActivityNotFoundException) {
+                    Log.e(this::class.java.simpleName, e.message.toString())
+                }
+            }
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        lifecycleScope.coroutineContext.cancelChildren()
     }
 
     override fun onDestroy() {

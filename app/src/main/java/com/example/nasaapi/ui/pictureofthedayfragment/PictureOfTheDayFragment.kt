@@ -41,7 +41,7 @@ class PictureOfTheDayFragment : Fragment() {
         ViewModelProvider(this, viewModelFactory)[PictureOfTheDayFragmentViewModel::class.java]
     }
 
-    private var canActivateIntent = false
+    private var canActivateActionViewIntent = false
     private var _binding: FragmentPictureOfTheDayBinding? = null
     private val binding: FragmentPictureOfTheDayBinding
         get() = _binding ?: throw RuntimeException("FragmentPictureOfTheDayBinding? = null")
@@ -177,19 +177,19 @@ class PictureOfTheDayFragment : Fragment() {
         when (mediaType) {
             IMAGE_TYPE -> {
                 appImageLoader.loadInto(url, binding.podFragmentImageView)
-                canActivateIntent = false
+                canActivateActionViewIntent = false
             }
             VIDEO_TYPE -> {
                 binding.podFragmentImageView.setImageResource(R.drawable.ic_baseline_ondemand_video_24)
-                canActivateIntent = true
-                init(url)
+                canActivateActionViewIntent = true
+                initActionViewIntent(url)
             }
         }
     }
 
-    private fun init(url: String) {
+    private fun initActionViewIntent(url: String) {
         binding.podFragmentImageView.setOnClickListener {
-            if (canActivateIntent) {
+            if (canActivateActionViewIntent) {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                 try {
                     startActivity(intent)

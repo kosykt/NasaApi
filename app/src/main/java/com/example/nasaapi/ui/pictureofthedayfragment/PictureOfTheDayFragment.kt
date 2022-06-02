@@ -1,14 +1,16 @@
 package com.example.nasaapi.ui.pictureofthedayfragment
 
+import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebChromeClient
+import android.webkit.WebSettings
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Lifecycle
@@ -41,7 +43,6 @@ class PictureOfTheDayFragment : Fragment() {
         ViewModelProvider(this, viewModelFactory)[PictureOfTheDayFragmentViewModel::class.java]
     }
 
-    private var canActivateActionViewIntent = false
     private var _binding: FragmentPictureOfTheDayBinding? = null
     private val binding: FragmentPictureOfTheDayBinding
         get() = _binding ?: throw RuntimeException("FragmentPictureOfTheDayBinding? = null")
@@ -70,6 +71,18 @@ class PictureOfTheDayFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         getPod()
         initListeners()
+        presettingWebView()
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    private fun presettingWebView() {
+        with(binding.podFragmentWebView){
+            webChromeClient = WebChromeClient()
+            settings.javaScriptEnabled = true
+            settings.loadWithOverviewMode = true
+            settings.useWideViewPort = true
+            settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING
+        }
     }
 
     private fun initDialogResultListener() {
@@ -135,6 +148,9 @@ class PictureOfTheDayFragment : Fragment() {
         binding.podFragmentTitle.text = ""
         binding.podFragmentFavoriteCheckBox.isChecked = false
         binding.podFragmentDate.text = viewModel.actualDate.toString()
+        binding.podFragmentImageView.visibility = View.VISIBLE
+        binding.podFragmentWebView.visibility = View.GONE
+        binding.podFragmentWebView.loadUrl("about:blank")
     }
 
     private fun renderData(state: PictureOfTheDayFragmentState) {
@@ -177,25 +193,11 @@ class PictureOfTheDayFragment : Fragment() {
         when (mediaType) {
             IMAGE_TYPE -> {
                 appImageLoader.loadInto(url, binding.podFragmentImageView)
-                canActivateActionViewIntent = false
             }
             VIDEO_TYPE -> {
-                binding.podFragmentImageView.setImageResource(R.drawable.ic_baseline_ondemand_video_24)
-                canActivateActionViewIntent = true
-                initActionViewIntent(url)
-            }
-        }
-    }
-
-    private fun initActionViewIntent(url: String) {
-        binding.podFragmentImageView.setOnClickListener {
-            if (canActivateActionViewIntent) {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                try {
-                    startActivity(intent)
-                } catch (e: ActivityNotFoundException) {
-                    Log.e(this::class.java.simpleName, e.message.toString())
-                }
+                binding.podFragmentImageView.visibility = View.GONE
+                binding.podFragmentWebView.visibility = View.VISIBLE
+                binding.podFragmentWebView.loadUrl(url)
             }
         }
     }

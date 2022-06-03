@@ -12,7 +12,7 @@ import androidx.navigation.fragment.navArgs
 class DatePickerDialogFragment : DialogFragment(), DatePickerDialog.OnDateSetListener {
 
     private val args by navArgs<DatePickerDialogFragmentArgs>()
-//    test
+//    test2
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val year = args.date[0]
